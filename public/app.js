@@ -1,6 +1,6 @@
 const dvdListElement = document.getElementById("dvd-list");
-const rentalListElement = document.getElementById("rental-list");
 const dvdSelectElement = document.getElementById("dvd-select");
+const rentalListElement = document.getElementById("rental-list");
 
 document
   .getElementById("add-dvd-form")
