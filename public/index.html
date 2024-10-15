@@ -3,54 +3,88 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Location de DVDs</title>
-    <link rel="stylesheet" href="./style.css" />
+    <title>Location de DVD</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header>
-      <h1>Gestion de location de DVDs</h1>
-    </header>
+    <h1>Location de DVD</h1>
 
-    <section>
-      <h2>Ajouter un DVD</h2>
-      <form id="add-dvd-form">
-        <input type="text" id="title" placeholder="Titre du DVD" required />
-        <input type="text" id="genre" placeholder="Genre" required />
-        <input
-          type="number"
-          id="releaseYear"
-          placeholder="Année de sortie"
-          required
-        />
-        <button type="submit">Ajouter DVD</button>
-      </form>
-    </section>
+    <h2>Ajouter un nouveau DVD</h2>
+    <form id="addDvdForm">
+      <label for="title">Titre :</label>
+      <input type="text" id="title" required />
+      <br />
+      <label for="genre">Genre :</label>
+      <input type="text" id="genre" required />
+      <br />
+      <label for="releaseYear">Année de Sortie :</label>
+      <input type="number" id="releaseYear" required />
+      <br />
+      <label for="available">Disponible :</label>
+      <input type="checkbox" id="available" checked />
+      <br /><br />
+      <button type="submit">Ajouter DVD</button>
+    </form>
 
-    <section>
-      <h2>Liste des DVDs</h2>
-      <div id="dvd-list"></div>
-    </section>
+    <h2>Liste des DVDs</h2>
+    <table id="dvdTable">
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Genre</th>
+          <th>Année de Sortie</th>
+          <th>Disponible</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Les DVDs seront insérés ici dynamiquement -->
+      </tbody>
+    </table>
 
-    <section>
-      <h2>Ajouter une location</h2>
-      <form id="add-rental-form">
-        <input
-          type="text"
-          id="customerName"
-          placeholder="Nom du client"
-          required
-        />
-        <select id="dvd-select"></select>
-        <input type="date" id="dueDate" required />
-        <button type="submit">Louer DVD</button>
-      </form>
-    </section>
+    <h2>Modifier un DVD</h2>
+    <form id="editDvdForm" style="display: none">
+      <input type="hidden" id="dvdIdField" />
+      <label for="editTitle">Titre :</label>
+      <input type="text" id="editTitle" required />
+      <br />
+      <label for="editGenre">Genre :</label>
+      <input type="text" id="editGenre" required />
+      <br />
+      <label for="editReleaseYear">Année de Sortie :</label>
+      <input type="number" id="editReleaseYear" required />
+      <br />
+      <label for="editAvailable">Disponible :</label>
+      <input type="checkbox" id="editAvailable" />
+      <br /><br />
+      <button type="button" id="confirmEditButton">Confirmer</button>
+      <button type="button" id="cancelEditButton">Annuler</button>
+    </form>
 
-    <section>
-      <h2>Liste des Locations</h2>
-      <div id="rental-list"></div>
-    </section>
+    <h2>Ajouter une Location</h2>
+    <form id="addRentalForm">
+      <label for="dvdRentalId">ID du DVD :</label>
+      <input type="text" id="dvdRentalId" required />
+      <br />
+      <label for="renterName">Nom du Locataire :</label>
+      <input type="text" id="renterName" required />
+      <br />
+      <button type="submit">Ajouter Location</button>
+    </form>
 
-    <script src="./app.js"></script>
+    <h2>Liste des Locations</h2>
+    <table id="rentalTable">
+      <thead>
+        <tr>
+          <th>ID du DVD</th>
+          <th>Nom du Locataire</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Les locations seront insérées ici dynamiquement -->
+      </tbody>
+    </table>
+
+    <script src="app.js"></script>
   </body>
 </html>

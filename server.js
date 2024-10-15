@@ -1,49 +1,68 @@
 const express = require("express");
-const app = express();
-const port = 3000;
-const path = require("path");
 const bodyParser = require("body-parser");
 
-app.use(express.static(path.join(__dirname, "public")));
+const app = express();
+const port = 3000;
+
+// Middleware
 app.use(bodyParser.json());
+app.use(express.static("public")); // Pour servir les fichiers statiques
 
-// Connecting to MongoDB
+// Connexion à MongoDB
+// TODO: Importez Mongoose et établissez une connexion à la base de données MongoDB.
+// Utilisez mongoose.connect() pour vous connecter à votre instance MongoDB.
+// Assurez-vous de gérer les erreurs de connexion.
 
-// DVD Schema and Model
+// Modèle de DVD
+// TODO: Créez un schéma Mongoose pour le modèle DVD.
+// Incluez des champs tels que title, genre, releaseYear, et available.
+// Créez le modèle à partir du schéma avec mongoose.model().
 
-// Rental Schema and Model
+// Modèle de location
+// TODO: Créez un schéma Mongoose pour le modèle de location.
+// Incluez des champs tels que dvdId (référence au modèle DVD) et renterName.
+// Créez le modèle à partir du schéma avec mongoose.model().
 
-// Serve frontend HTML
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+// CRUD pour DVDs
+
+// 1. Récupérer tous les DVDs
+app.get("/dvds", async (req, res) => {
+  // TODO: Implémentez la logique pour récupérer tous les DVDs depuis la base de données
 });
 
-// Routes CRUD à compléter
-app.post("/dvds", (req, res) => {
-  // Logic à compléter pour créer un DVD
+// 2. Récupérer un DVD par son ID
+app.get("/dvds/:id", async (req, res) => {
+  // TODO: Implémentez la logique pour récupérer un DVD spécifique par son ID depuis la base de données
 });
 
-app.get("/dvds", (req, res) => {
-  // Logic à compléter pour lire tous les DVDs
+// 3. Ajouter un nouveau DVD
+app.post("/dvds", async (req, res) => {
+  // TODO: Implémentez la logique pour ajouter un nouveau DVD dans la base de données
 });
 
-app.patch("/dvds/:id", (req, res) => {
-  // Logic à compléter pour mettre à jour un DVD
+// 4. Mettre à jour un DVD existant
+app.put("/dvds/:id", async (req, res) => {
+  // TODO: Implémentez la logique pour mettre à jour un DVD existant dans la base de données
 });
 
-app.delete("/dvds/:id", (req, res) => {
-  // Logic à compléter pour supprimer un DVD
+// 5. Supprimer un DVD
+app.delete("/dvds/:id", async (req, res) => {
+  // TODO: Implémentez la logique pour supprimer un DVD de la base de données
 });
 
-app.post("/rentals", (req, res) => {
-  // Logic à compléter pour créer une location
+// CRUD pour locations
+
+// 1. Récupérer toutes les locations
+app.get("/rentals", async (req, res) => {
+  // TODO: Implémentez la logique pour récupérer toutes les locations depuis la base de données
 });
 
-app.patch("/rentals/:id/return", (req, res) => {
-  // Logic à compléter pour marquer un DVD comme retourné
+// 2. Ajouter une nouvelle location
+app.post("/rentals", async (req, res) => {
+  // TODO: Implémentez la logique pour ajouter une nouvelle location dans la base de données
 });
 
-// Start the server
+// Démarrer le serveur
 app.listen(port, () => {
-  console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
+  console.log(`Serveur à l'écoute sur http://localhost:${port}`);
 });
