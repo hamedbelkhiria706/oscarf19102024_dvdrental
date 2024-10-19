@@ -89,6 +89,14 @@ app.put("/dvds/:id", async (req, res) => {
 // 5. Supprimer un DVD
 app.delete("/dvds/:id", async (req, res) => {
   // TODO: Implémentez la logique pour supprimer un DVD de la base de données
+  DVDm.findByIdAndDelete(
+    { _id: db.Types.ObjectId(req.params.id) },
+    function (err, docs) {
+      console.log(err);
+      console.log(docs);
+    }
+  );
+  res.send("Supprimé");
 });
 
 // CRUD pour locations
@@ -96,11 +104,18 @@ app.delete("/dvds/:id", async (req, res) => {
 // 1. Récupérer toutes les locations
 app.get("/rentals", async (req, res) => {
   // TODO: Implémentez la logique pour récupérer toutes les locations depuis la base de données
+  const result = await RENTALm.find();
+  res.send(result);
 });
 
 // 2. Ajouter une nouvelle location
 app.post("/rentals", async (req, res) => {
   // TODO: Implémentez la logique pour ajouter une nouvelle location dans la base de données
+  const d = req.body;
+  const dsave = new RENTALm(d);
+  await dsave.save();
+
+  res.send("Succesfully added");
 });
 
 // Démarrer le serveur
