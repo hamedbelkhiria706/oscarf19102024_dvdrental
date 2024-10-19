@@ -21,20 +21,20 @@ db.connect("mongodb://127.0.0.1:27017/dvdrental", (error) => {
 // TODO: Créez un schéma Mongoose pour le modèle DVD.
 // Incluez des champs tels que title, genre, releaseYear, et available.
 // Créez le modèle à partir du schéma avec mongoose.model().
-const DVD = db.Schema({
+const DVD = new db.Schema({
   //dvdId: db.Types.ObjectId,
-  title: { String, required: True },
-  rentalName: { String, required: true },
-  releaseYear: { Number, required: true },
-  available: { Boolean, required: true, default: true },
+  title: { type: String, required: true },
+  genre: { type: String, required: true },
+  releaseYear: { type: Number, required: true },
+  available: { type: Boolean, required: true, default: true },
 });
-const DVDm = db.model("dvd", { schema: DVD });
-const RENTAL = db.Schema({
+const DVDm = db.model("dvd", DVD);
+const RENTAL = new db.Schema({
   dvdId: { type: db.Schema.Types.ObjectId, ref: "DVDm" },
-  customerName: { String, required: true },
+  customerName: { type: String, required: true },
 });
 
-const RENTALm = db.model("rental", { schema: RENTAL });
+const RENTALm = db.model("rental", RENTAL);
 // Modèle de location
 // TODO: Créez un schéma Mongoose pour le modèle de location.
 // Incluez des champs tels que dvdId (référence au modèle DVD) et renterName.
@@ -45,21 +45,45 @@ const RENTALm = db.model("rental", { schema: RENTAL });
 // 1. Récupérer tous les DVDs
 app.get("/dvds", async (req, res) => {
   // TODO: Implémentez la logique pour récupérer tous les DVDs depuis la base de données
+  const result = await DVDm.find();
+  res.send(result);
 });
 
 // 2. Récupérer un DVD par son ID
 app.get("/dvds/:id", async (req, res) => {
   // TODO: Implémentez la logique pour récupérer un DVD spécifique par son ID depuis la base de données
+  DVDm.find({ _id: req.params.id }, (err, docs) => {
+    res.send(docs);
+  });
 });
 
 // 3. Ajouter un nouveau DVD
 app.post("/dvds", async (req, res) => {
   // TODO: Implémentez la logique pour ajouter un nouveau DVD dans la base de données
+
+  const d = req.body;
+  const dsave = new DVDm(d);
+  await dsave.save();
+
+  res.send("Succesfully added");
 });
 
 // 4. Mettre à jour un DVD existant
 app.put("/dvds/:id", async (req, res) => {
   // TODO: Implémentez la logique pour mettre à jour un DVD existant dans la base de données
+  const d = req.body;
+  const dsave = new DVDm(d);
+  console.log(req.params.id);
+  DVDm.findByIdAndUpdate(
+    { _id: db.Types.ObjectId(req.params.id) },
+    { $set: dsave },
+    { upsert: true, new: true },
+    function (err, docs) {
+      console.log(err, docs);
+    }
+  );
+
+  res.send("Succesfully updated");
 });
 
 // 5. Supprimer un DVD
