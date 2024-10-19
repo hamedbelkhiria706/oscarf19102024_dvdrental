@@ -7,7 +7,11 @@ const port = 3000;
 // Middleware
 app.use(bodyParser.json());
 app.use(express.static("public")); // Pour servir les fichiers statiques
+const db = require("mongoose");
 
+db.connect("mongodb://127.0.0.1:27017/dvdrental", (error) => {
+  console.log("error" + error);
+});
 // Connexion à MongoDB
 // TODO: Importez Mongoose et établissez une connexion à la base de données MongoDB.
 // Utilisez mongoose.connect() pour vous connecter à votre instance MongoDB.
@@ -17,7 +21,20 @@ app.use(express.static("public")); // Pour servir les fichiers statiques
 // TODO: Créez un schéma Mongoose pour le modèle DVD.
 // Incluez des champs tels que title, genre, releaseYear, et available.
 // Créez le modèle à partir du schéma avec mongoose.model().
+const DVD = db.Schema({
+  //dvdId: db.Types.ObjectId,
+  title: { String, required: True },
+  rentalName: { String, required: true },
+  releaseYear: { Number, required: true },
+  available: { Boolean, required: true, default: true },
+});
+const DVDm = db.model("dvd", { schema: DVD });
+const RENTAL = db.Schema({
+  dvdId: { type: db.Schema.Types.ObjectId, ref: "DVDm" },
+  customerName: { String, required: true },
+});
 
+const RENTALm = db.model("rental", { schema: RENTAL });
 // Modèle de location
 // TODO: Créez un schéma Mongoose pour le modèle de location.
 // Incluez des champs tels que dvdId (référence au modèle DVD) et renterName.
