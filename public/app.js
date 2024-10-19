@@ -8,6 +8,7 @@ async function loadDvds() {
   dvds.forEach((dvd) => {
     const row = document.createElement("tr");
     row.innerHTML = `
+    <td>${dvd._id}</td>
           <td>${dvd.title}</td>
           <td>${dvd.genre}</td>
           <td>${dvd.releaseYear}</td>
@@ -56,6 +57,7 @@ async function addDvd(event) {
 }
 
 async function loadDvdDetailsForEdit(dvdId) {
+  console.log(dvdId);
   try {
     const response = await fetch(`http://localhost:3000/dvds/${dvdId}`);
     const dvd = await response.json();

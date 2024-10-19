@@ -52,9 +52,8 @@ app.get("/dvds", async (req, res) => {
 // 2. Récupérer un DVD par son ID
 app.get("/dvds/:id", async (req, res) => {
   // TODO: Implémentez la logique pour récupérer un DVD spécifique par son ID depuis la base de données
-  DVDm.find({ _id: req.params.id }, (err, docs) => {
-    res.send(docs);
-  });
+  var e = await DVDm.findById(req.params.id);
+  res.send(e);
 });
 
 // 3. Ajouter un nouveau DVD
@@ -72,18 +71,16 @@ app.post("/dvds", async (req, res) => {
 app.put("/dvds/:id", async (req, res) => {
   // TODO: Implémentez la logique pour mettre à jour un DVD existant dans la base de données
   const d = req.body;
-  const dsave = new DVDm(d);
-  console.log(req.params.id);
-  DVDm.findByIdAndUpdate(
-    { _id: db.Types.ObjectId(req.params.id) },
-    { $set: dsave },
-    { upsert: true, new: true },
-    function (err, docs) {
-      console.log(err, docs);
-    }
-  );
 
-  res.send("Succesfully updated");
+  console.log(req.params.id);
+  var t;
+  try {
+    t = await DVDm.findByIdAndUpdate(req.params.id, d, {
+      upsert: true,
+      new: true,
+    });
+  } catch (e) {}
+  res.send(t);
 });
 
 // 5. Supprimer un DVD
