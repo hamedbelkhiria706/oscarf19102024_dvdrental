@@ -31,7 +31,7 @@ const DVD = new db.Schema({
 const DVDm = db.model("dvd", DVD);
 const RENTAL = new db.Schema({
   dvdId: { type: db.Schema.Types.ObjectId, ref: "DVDm" },
-  customerName: { type: String, required: true },
+  renterName: { type: String, required: true },
 });
 
 const RENTALm = db.model("rental", RENTAL);
